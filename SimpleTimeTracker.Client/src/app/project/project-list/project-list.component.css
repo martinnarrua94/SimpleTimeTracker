@@ -1,0 +1,15 @@
+table {
+    width: 100%;
+  }
+
+  .add-button {
+    position: absolute;
+    right: 5px;
+    margin: 10px;
+  }
+
+  .action-button
+  {
+    right: 5px;
+    margin: 5px;
+  }
