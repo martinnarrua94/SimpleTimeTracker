@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace SimpleTimeTracker
 {
     public class ProjectDTO

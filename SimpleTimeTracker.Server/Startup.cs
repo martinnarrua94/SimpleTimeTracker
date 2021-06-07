@@ -20,13 +20,14 @@ namespace SimpleTimeTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SimpleTimeTracker", Version = "v1" });
             });
-
 
             services.AddTransient<SimpleTimeTrackerDbContext>();
             services.AddTransient<IGenericRepository<Project>, GenericRepository<Project>>();
@@ -51,6 +52,11 @@ namespace SimpleTimeTracker
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+             app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());   
 
             app.UseAuthorization();
 
