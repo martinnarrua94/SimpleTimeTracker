@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -19,6 +19,27 @@ export class ProjectService {
       map((response: IProject[]) => {
         return response;
       })
+    );
+  }
+
+  createProject(project: IProject): Observable<IProject> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const newProject = { ...project, id: null };
+    return this.http.post<IProject>(`${this.APIURL}Projects`, newProject, { headers })
+      .pipe(
+        map((response: IProject) => {
+          return response;
+        })
+    );
+  }
+
+  updateProject(project: IProject): Observable<IProject>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<IProject>(`${this.APIURL}Projects/${project.id}`, project, { headers })
+      .pipe(
+        map((response: IProject) => {
+          return response;
+        })
     );
   }
 }

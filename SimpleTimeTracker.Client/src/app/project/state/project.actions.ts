@@ -7,7 +7,13 @@ export enum ProjectActionTypes{
     LoadFail = '[Project] Load Fail',
     SetCurrentProject = '[Project] Set Current Project',
     ClearCurrentProject = '[Project] Clear Current Project',
-    InitializeCurrentProject = '[Project] Initialize Current Project'
+    InitializeCurrentProject = '[Project] Initialize Current Project',
+    AddProject = '[Project] Add Project',
+    AddProjectSuccess = '[Project] Add Project Success',
+    AddProjectFail = '[Project] Add Project Fail',
+    UpdateProject = '[Project] Update Project',
+    UpdateProjectSuccess = '[Project] Update Project Success',
+    UpdateProjectFail = '[Project] Update Project Fail'
 }
 
 export class Load implements Action {
@@ -40,9 +46,51 @@ export class InitializeCurrentProject implements Action {
     readonly type = ProjectActionTypes.InitializeCurrentProject;
 }
 
+export class AddProject implements Action {
+    readonly type = ProjectActionTypes.AddProject;
+
+    constructor(public payload: IProject) { }
+}
+
+export class AddProjectSuccess implements Action {
+    readonly type = ProjectActionTypes.AddProjectSuccess;
+
+    constructor(public payload: IProject) { }
+}
+
+export class AddProjectFail implements Action {
+    readonly type = ProjectActionTypes.AddProjectFail;
+
+    constructor(public payload: string) { }
+}
+
+export class UpdateProject implements Action {
+    readonly type = ProjectActionTypes.UpdateProject;
+
+    constructor(public payload: IProject) { }
+}
+
+export class UpdateProjectSuccess implements Action {
+    readonly type = ProjectActionTypes.UpdateProjectSuccess;
+
+    constructor(public payload: IProject) { }
+}
+
+export class UpdateProjectFail implements Action {
+    readonly type = ProjectActionTypes.UpdateProjectFail;
+
+    constructor(public payload: string) { }
+}
+
 export type ProjectActions = Load
     | LoadSuccess
     | LoadFail
     | SetCurrentProject
     | ClearCurrentProject
-    | InitializeCurrentProject;
+    | InitializeCurrentProject
+    | AddProject
+    | AddProjectSuccess
+    | AddProjectFail
+    | UpdateProject
+    | UpdateProjectSuccess
+    | UpdateProjectFail;

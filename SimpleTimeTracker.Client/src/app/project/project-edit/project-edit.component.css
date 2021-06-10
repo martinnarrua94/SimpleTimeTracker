@@ -1,0 +1,15 @@
+.full-width {
+    width: 100%;
+  }
+
+  form {
+    min-width: 150px;
+    max-width: 40%;
+    margin: 30px;
+  }
+
+  .save-button {
+    float: right;
+    right: 5px;
+    margin: 10px;
+  }

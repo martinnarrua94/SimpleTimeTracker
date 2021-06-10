@@ -11,6 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { ProjectEditComponent } from './project-edit/project-edit.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: Routes = [
   {
@@ -30,9 +32,11 @@ const routes: Routes = [
   imports: [
     CommonModule,
     HttpClientModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatTableModule,
     MatIconModule,
+    MatInputModule,
     StoreModule.forFeature('projects', reducer),
     EffectsModule.forFeature([ProjectEffects]),
     RouterModule.forChild(routes)

@@ -4,13 +4,13 @@ import { ProjectActions, ProjectActionTypes } from "./project.actions";
 
 export interface ProjectState{
     projects: IProject[];
-    currentProject: IProject;
+    currentProjectId: number | null;
     error: string;
 }
 
 const initialState: ProjectState = {
     projects: [],
-    currentProject: null,
+    currentProjectId: null,
     error: ''
 }
 
@@ -18,7 +18,24 @@ const getProjectFeatureState = createFeatureSelector<ProjectState>('projects');
 
 export const getProjects = createSelector(getProjectFeatureState, state => state.projects);
 
-export const getCurrentProject = createSelector(getProjectFeatureState, state => state.currentProject);
+export const getCurrentProjectId = createSelector(getProjectFeatureState, state => state.currentProjectId);
+
+export const getCurrentProject = createSelector(
+    getProjectFeatureState,
+    getCurrentProjectId,
+    (state, currentProjectId) => {
+        if (currentProjectId == 0) {
+            return {
+                id: 0,
+                name: '',
+                notes: ''
+            };
+        }
+        else {
+            return currentProjectId ? state.projects.find(p => p.id == currentProjectId) : null;
+        }
+    }
+);
 
 export const getError = createSelector(getProjectFeatureState, state => state.error);
 
@@ -41,18 +58,45 @@ export function reducer(state: ProjectState = initialState, action: ProjectActio
         case ProjectActionTypes.SetCurrentProject:
             return {
                 ...state,
-                currentProject: { ...action.payload }
+                currentProjectId: action.payload.id
             };
         
         case ProjectActionTypes.InitializeCurrentProject:
             return {
                 ...state,
-                currentProject: {
-                    id: 0,
-                    name: '',
-                    notes: ''
-                }
+                currentProjectId: 0
             }
+        
+            case ProjectActionTypes.AddProjectSuccess:
+                return {
+                    ...state,
+                    projects: [...state.projects, action.payload],
+                    currentProjectId: action.payload.id,
+                    error: ''
+                };
+            
+            case ProjectActionTypes.AddProjectFail:
+                return {
+                    ...state,
+                    error: action.payload
+                };
+        
+        case ProjectActionTypes.UpdateProjectSuccess:
+            const updatedProjects = state.projects.map(
+                item => action.payload.id == item.id ? action.payload : item);
+            return {
+                ...state,
+                projects: updatedProjects,
+                currentProjectId: action.payload.id,
+                error: ''
+            };
+        
+        case ProjectActionTypes.UpdateProjectFail:
+            return {
+                ...state,
+                error: action.payload
+            };
+            
         
         default:
             return state;
