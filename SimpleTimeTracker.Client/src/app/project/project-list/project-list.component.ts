@@ -5,6 +5,8 @@ import { State } from '../../state/app.state';
 import { IProject } from '../project';
 import * as projectActions from '../state/project.actions';
 import * as fromProject from '../state';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/common/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-project-list',
@@ -16,7 +18,7 @@ export class ProjectListComponent implements OnInit {
   projects$: Observable<IProject[]>;
   errorMessage$: Observable<string>;
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.store.dispatch(new projectActions.Load());
@@ -31,17 +33,31 @@ export class ProjectListComponent implements OnInit {
     this.store.dispatch(new projectActions.InitializeCurrentProject());
   }
 
-  editProject(project: IProject) : void {
+  editProject(project: IProject): void {
     this.projectSelected(project, false);
   }
 
-  viewProject(project: IProject) : void {
+  viewProject(project: IProject): void {
     this.projectSelected(project, true);
   }
 
   projectSelected(project: IProject, readOnly: boolean) {
     this.store.dispatch(new projectActions.SetCurrentProject(project));
     this.store.dispatch(new projectActions.SetReadOnlyValue(readOnly));
+  }
+
+  deleteProject(project: IProject): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: { message: "¿Está seguro que desea eliminar este projecto?" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new projectActions.SetCurrentProject(project));
+        this.store.dispatch(new projectActions.DeleteProject(project.id));
+      }
+    })
   }
 
 }

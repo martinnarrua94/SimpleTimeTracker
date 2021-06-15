@@ -42,4 +42,14 @@ export class ProjectService {
         })
     );
   }
+
+  deleteProject(projectId: number): Observable<any>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.delete(`${this.APIURL}Projects/${projectId}`, { headers })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+    );
+  }
 }

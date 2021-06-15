@@ -44,4 +44,16 @@ export class ProjectEffects {
             ))
         )
     );
+
+    deleteProjects$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(projectActions.ProjectActionTypes.DeleteProject),
+            map((action: projectActions.DeleteProject) => action.payload),
+            mergeMap((projectId: number) =>
+                this.projectService.deleteProject(projectId).pipe(
+                    map(() => (new projectActions.DeleteProjectSuccess())),
+                    catchError(error => of(new projectActions.UpdateProjectFail(error)))
+            ))
+        )
+    );
 }

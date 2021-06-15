@@ -79,6 +79,23 @@ export function reducer(state: ProjectState = initialState, action: ProjectActio
                 ...state,
                 error: action.payload
             };
+        
+        case ProjectActionTypes.DeleteProjectSuccess:
+            const remainingProjects = state.projects.filter(
+                x => x.id != state.currentProjectId
+            );
+            return {
+                ...state,
+                projects: remainingProjects,
+                currentProjectId: null,
+                error: ''
+            };
+        
+        case ProjectActionTypes.DeleteProjectFail:
+            return {
+                ...state,
+                error: action.payload
+            };
             
         
         default:
