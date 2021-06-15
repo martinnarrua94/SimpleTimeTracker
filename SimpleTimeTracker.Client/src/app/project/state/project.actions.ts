@@ -6,6 +6,7 @@ export enum ProjectActionTypes{
     LoadSuccess = '[Project] Load Success',
     LoadFail = '[Project] Load Fail',
     SetCurrentProject = '[Project] Set Current Project',
+    SetReadOnlyValue = '[Project] Set Read Only Value', 
     ClearCurrentProject = '[Project] Clear Current Project',
     InitializeCurrentProject = '[Project] Initialize Current Project',
     AddProject = '[Project] Add Project',
@@ -36,6 +37,12 @@ export class SetCurrentProject implements Action {
     readonly type = ProjectActionTypes.SetCurrentProject;
 
     constructor(public payload: IProject) { }
+}
+
+export class SetReadOnlyValue implements Action {
+    readonly type = ProjectActionTypes.SetReadOnlyValue;
+
+    constructor(public payload: boolean) { }
 }
 
 export class ClearCurrentProject implements Action {
@@ -86,6 +93,7 @@ export type ProjectActions = Load
     | LoadSuccess
     | LoadFail
     | SetCurrentProject
+    | SetReadOnlyValue
     | ClearCurrentProject
     | InitializeCurrentProject
     | AddProject

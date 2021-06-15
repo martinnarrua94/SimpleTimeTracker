@@ -2,6 +2,8 @@
     Error: {{errorMessage}}
 </div>
 
+<div class="mat-h1 headline">Projectos</div>
+
 <table mat-table [dataSource]="projects$ | async" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
@@ -20,7 +22,7 @@
         <button mat-raised-button color="accent"
             class="action-button"
             [routerLink]="['/projects/edit']"
-            (click)="projectSelected(project)">
+            (click)="editProject(project)">
             <mat-icon>edit</mat-icon>
             Editar
         </button>
@@ -30,7 +32,9 @@
             Eliminar
         </button>
         <button mat-raised-button color="primary"
-            class="action-button">
+            class="action-button"
+            [routerLink]="['/projects/edit']"
+            (click)="viewProject(project)">
             <mat-icon>visibility</mat-icon>
             Ver
         </button>

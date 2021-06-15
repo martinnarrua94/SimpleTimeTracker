@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { State } from '../../state/app.state';
 import { IProject } from '../project';
 import * as projectActions from '../state/project.actions';
-import * as fromProject from '../state/project.reducer';
+import * as fromProject from '../state';
 
 @Component({
   selector: 'app-project-list',
@@ -26,13 +26,22 @@ export class ProjectListComponent implements OnInit {
     this.errorMessage$ = this.store.pipe(select(fromProject.getError))
 
   }
-
-  projectSelected(project: IProject) : void {
-    this.store.dispatch(new projectActions.SetCurrentProject(project));
-  }
-
+  
   newProject(): void {
     this.store.dispatch(new projectActions.InitializeCurrentProject());
+  }
+
+  editProject(project: IProject) : void {
+    this.projectSelected(project, false);
+  }
+
+  viewProject(project: IProject) : void {
+    this.projectSelected(project, true);
+  }
+
+  projectSelected(project: IProject, readOnly: boolean) {
+    this.store.dispatch(new projectActions.SetCurrentProject(project));
+    this.store.dispatch(new projectActions.SetReadOnlyValue(readOnly));
   }
 
 }

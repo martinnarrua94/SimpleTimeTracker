@@ -6,7 +6,8 @@ import { tap } from 'rxjs/operators';
 import { State } from 'src/app/state/app.state';
 import { IProject } from '../project';
 import * as projectActions from '../state/project.actions';
-import { getCurrentProject } from '../state/project.reducer';
+import { getCurrentProject, getIsReadOnly } from '../state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-edit',
@@ -18,8 +19,9 @@ export class ProjectEditComponent implements OnInit {
   projectForm: FormGroup;
   project$: Observable<IProject | null>
   pageTitle: string;
+  isReadOnly: boolean;
 
-  constructor(private fb: FormBuilder, private store: Store<State>) { }
+  constructor(private fb: FormBuilder, private store: Store<State>, private router: Router) { }
 
   ngOnInit(): void {
     this.projectForm = this.fb.group({
@@ -27,17 +29,27 @@ export class ProjectEditComponent implements OnInit {
       notes: ['']  
     });
 
+    
+    this.store.select(getIsReadOnly).subscribe(
+      isReadOnly => this.isReadOnly = isReadOnly
+    );
+
     this.project$ = this.store.select(getCurrentProject)
       .pipe(
         tap(currentProject => this.displayProject(currentProject))
-      );
+    );
   }
 
   displayProject(project: IProject | null): void{
     if (project) {
       this.projectForm.reset();
 
-      this.pageTitle = project.id == 0 ? "Crear nuevo proyecto" : `Edit Proyecto: ${project.name}`;
+      if (project.id == 0) {
+        this.pageTitle = "Crear nuevo proyecto";
+      }
+      else {
+        this.pageTitle = this.isReadOnly ? `Informacion del projecto ${project.name}` : `Editar Proyecto: ${project.name}`;
+      }
 
       this.projectForm.patchValue({
         name: project.name,
@@ -56,6 +68,8 @@ export class ProjectEditComponent implements OnInit {
       else {
         this.store.dispatch(new projectActions.UpdateProject(project));
       }
+
+      this.router.navigate(["/projects"]);
     }
   }
 
