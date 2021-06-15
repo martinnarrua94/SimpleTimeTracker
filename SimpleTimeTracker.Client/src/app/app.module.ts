@@ -15,10 +15,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    MatDialogModule,
     StoreModule.forRoot({}),   
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([ProjectEffects]),
