@@ -3,7 +3,7 @@
         <h1>{{pageTitle}}</h1>
         <mat-form-field class="full-width">
             <mat-label>Nombre</mat-label>
-            <input type="text" matInput formControlName="name">
+            <input type="text" matInput formControlName="name" [readonly]="isReadOnly">
             <mat-error *ngIf="projectForm.get('name').hasError('required')">
                 For favor, ingrese un nombre válido.
             </mat-error>
@@ -11,22 +11,23 @@
             
         <mat-form-field class="full-width">
             <mat-label>Notas</mat-label>
-            <textarea matInput formControlName="notes" rows="4"></textarea>
+            <textarea matInput formControlName="notes" rows="4" [readonly]="isReadOnly"></textarea>
         </mat-form-field>  
     
         <button mat-raised-button
-                color="warn"
+                color="{{backButtonColor}}"
                 class="save-button"
                 [routerLink]="['/projects']">
-                <mat-icon>cancel</mat-icon>             
-            Cancelar
+                <mat-icon>{{backButtonIcon}}</mat-icon>             
+            {{backButtonLabel}}
         </button>
 
         <button mat-raised-button
                 color="primary"
                 type="submit"
                 [disabled]="!projectForm.valid"
-                class="save-button">
+                class="save-button"
+                *ngIf="!isReadOnly">
             <mat-icon>check_circle</mat-icon>
             Guardar
         </button>

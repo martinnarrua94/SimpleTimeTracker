@@ -20,6 +20,9 @@ export class ProjectEditComponent implements OnInit {
   project$: Observable<IProject | null>
   pageTitle: string;
   isReadOnly: boolean;
+  backButtonColor: string;
+  backButtonIcon: string;
+  backButtonLabel: string;
 
   constructor(private fb: FormBuilder, private store: Store<State>, private router: Router) { }
 
@@ -38,6 +41,10 @@ export class ProjectEditComponent implements OnInit {
       .pipe(
         tap(currentProject => this.displayProject(currentProject))
     );
+
+    this.backButtonLabel = this.isReadOnly ? "Atras" : "Cancelar";
+    this.backButtonIcon = this.isReadOnly ? "chevron_left" : "cancel";
+    this.backButtonColor = this.isReadOnly ? "accent" : "warn";
   }
 
   displayProject(project: IProject | null): void{
