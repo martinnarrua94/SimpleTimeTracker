@@ -17,6 +17,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarEffects } from './state/shared/snackbar/snackbar.effects';
+
 
 @NgModule({
   declarations: [
@@ -34,9 +37,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSidenavModule,
     MatListModule,
     MatDialogModule,
+    MatSnackBarModule,
     StoreModule.forRoot({}),   
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([ProjectEffects]),
+    EffectsModule.forFeature([ProjectEffects, SnackbarEffects]),
     StoreDevtoolsModule.instrument({
       name: 'SimpleTimeTracker DevTools',
       maxAge: 25,
