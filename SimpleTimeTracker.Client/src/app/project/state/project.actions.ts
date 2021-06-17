@@ -1,7 +1,7 @@
 import { Action } from "@ngrx/store";
 import { IProject } from "../project";
 
-export enum ProjectActionTypes{
+export enum ProjectActionTypes {
     Load = '[Project] Load',
     LoadSuccess = '[Project] Load Success',
     LoadFail = '[Project] Load Fail',

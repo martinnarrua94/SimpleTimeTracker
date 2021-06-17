@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
+import { SnackbarOpen } from 'src/app/state/shared/snackbar/snackbar.actions';
 import { IProject } from '../project';
 import { ProjectService } from '../project.service';
 import * as projectActions from './project.actions';
@@ -54,6 +55,36 @@ export class ProjectEffects {
                     map(() => (new projectActions.DeleteProjectSuccess())),
                     catchError(error => of(new projectActions.UpdateProjectFail(error)))
             ))
+        )
+    );
+
+    addProjectSuccess$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(projectActions.ProjectActionTypes.AddProjectSuccess),
+            map(() => new SnackbarOpen({
+                message: 'Project created successfully',
+                action: 'Success'
+            })),
+        )
+    );
+
+    updateProjectSuccess$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(projectActions.ProjectActionTypes.UpdateProjectSuccess),
+            map(() => new SnackbarOpen({
+                message: 'Project updated successfully',
+                action: 'Success'
+            })),
+        )
+    );
+
+    deleteProjectSuccess$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(projectActions.ProjectActionTypes.DeleteProjectSuccess),
+            map(() => new SnackbarOpen({
+                message: 'Project deleted successfully',
+                action: 'Success'
+            })),
         )
     );
 }
