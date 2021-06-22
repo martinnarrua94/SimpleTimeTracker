@@ -3,9 +3,9 @@ table {
   }
 
   .add-button {
-    position: absolute;
-    right: 5px;
-    margin: 10px;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
   }
 
   .action-button

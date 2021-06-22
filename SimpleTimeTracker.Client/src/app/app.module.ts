@@ -19,6 +19,7 @@ import { ConfirmationDialogComponent } from './common/confirmation-dialog/confir
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarEffects } from './state/shared/snackbar/snackbar.effects';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { SnackbarEffects } from './state/shared/snackbar/snackbar.effects';
     MatListModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatTooltipModule,
     StoreModule.forRoot({}),   
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([ProjectEffects, SnackbarEffects]),
