@@ -10,37 +10,23 @@ import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjectEffects } from './project/state/project.effects';
 import { ProjectModule } from './project/project.module';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarEffects } from './state/shared/snackbar/snackbar.effects';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { AppMaterialModule } from './app-material.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfirmationDialogComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
     ProjectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    StoreModule.forRoot({}),   
+    AppMaterialModule,
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([ProjectEffects, SnackbarEffects]),
     StoreDevtoolsModule.instrument({

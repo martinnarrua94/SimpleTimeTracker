@@ -5,14 +5,11 @@ import { ProjectEffects } from './state/project.effects';
 import { reducer } from './state/project.reducer';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
 import { ProjectListComponent } from './project-list/project-list.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
 import { ProjectEditComponent } from './project-edit/project-edit.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { AppMaterialModule } from '../app-material.module';
 
 const routes: Routes = [
   {
@@ -33,10 +30,7 @@ const routes: Routes = [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatTableModule,
-    MatIconModule,
-    MatInputModule,
+    AppMaterialModule,
     StoreModule.forFeature('projects', reducer),
     EffectsModule.forFeature([ProjectEffects]),
     RouterModule.forChild(routes)
