@@ -12,6 +12,8 @@ import { ProjectEffects } from './project/state/project.effects';
 import { ProjectModule } from './project/project.module';
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarEffects } from './state/shared/snackbar/snackbar.effects';
+import { ProjectTaskEffects } from './project-task/state/project-task.effects';
+import { ProjectTaskModule } from './project-task/project-task.module';
 import { AppMaterialModule } from './app-material.module';
 
 
@@ -23,12 +25,13 @@ import { AppMaterialModule } from './app-material.module';
   imports: [
     BrowserModule,
     ProjectModule,
+    ProjectTaskModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([ProjectEffects, SnackbarEffects]),
+    EffectsModule.forFeature([ProjectEffects, ProjectTaskEffects, SnackbarEffects]),
     StoreDevtoolsModule.instrument({
       name: 'SimpleTimeTracker DevTools',
       maxAge: 25,

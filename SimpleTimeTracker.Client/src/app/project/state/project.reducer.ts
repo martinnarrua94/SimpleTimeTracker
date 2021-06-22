@@ -1,7 +1,7 @@
 import { IProject } from "../project";
 import { ProjectActions, ProjectActionTypes } from "./project.actions";
 
-export interface ProjectState{
+export interface ProjectState {
     projects: IProject[];
     currentProjectId: number | null;
     readOnlyProject: boolean;
@@ -29,7 +29,7 @@ export function reducer(state: ProjectState = initialState, action: ProjectActio
                 ...state,
                 projects: [],
                 error: action.payload
-            }
+            };
         
         case ProjectActionTypes.SetCurrentProject:
             return {
