@@ -6,6 +6,7 @@ export enum ProjectTaskActionTypes {
     LoadSuccess = '[Project Tasl] Load Success',
     LoadFail = '[Project Task] Load Fail',
     SetCurrentProjectTask = '[Project Task] Set Current Project Task',
+    SetProjectIdFilter = '[Project Task] Set Project Id Filter',
     ClearCurrentProjectTask = '[Project Task] Clear Current Project Task',
     InitializeCurrentProjectTask = '[Project Task] Initialize Current Project Task',
     AddProjectTask = '[Project Task] Add Project Task',
@@ -33,6 +34,12 @@ export class LoadFail implements Action {
     readonly type = ProjectTaskActionTypes.LoadFail;
 
     constructor(public payload: string) { }
+}
+
+export class SetProjectIdFilter implements Action {
+    readonly type = ProjectTaskActionTypes.SetProjectIdFilter;
+
+    constructor(public payload: number) { }
 }
 
 export class SetCurrentProjectTask implements Action {
@@ -105,6 +112,7 @@ export type ProjectTaskActions = Load
     | LoadSuccess
     | LoadFail
     | SetCurrentProjectTask
+    | SetProjectIdFilter
     | ClearCurrentProjectTask
     | InitializeCurrentProjectTask
     | AddProjectTask

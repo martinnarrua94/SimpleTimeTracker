@@ -6,3 +6,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .headline{
     margin: 10px;
 }
+
+table {
+    width: 100%;
+  }
+
+.filter-fields{
+    margin-left: 10px;
+}

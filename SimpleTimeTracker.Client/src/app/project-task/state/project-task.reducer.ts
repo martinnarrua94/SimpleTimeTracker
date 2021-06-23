@@ -4,12 +4,14 @@ import { ProjectTaskActions, ProjectTaskActionTypes } from "./project-task.actio
 export interface ProjectTaskState {
     projectTasks: IProjectTask[];
     currentProjectTaskId: number | null;
+    projectIdFilter: number | null;
     error: string;
 }
 
 const initialState: ProjectTaskState = {
     projectTasks: [],
     currentProjectTaskId: null,
+    projectIdFilter: null,
     error: ''
 }
 
@@ -33,6 +35,12 @@ export function reducer(state: ProjectTaskState = initialState, action: ProjectT
             return {
                 ...state,
                 currentProjectTaskId: action.payload.id
+            };
+        
+        case ProjectTaskActionTypes.SetProjectIdFilter:
+            return {
+                ...state,
+                projectIdFilter: action.payload
             };
         
         case ProjectTaskActionTypes.InitializeCurrentProjectTask:

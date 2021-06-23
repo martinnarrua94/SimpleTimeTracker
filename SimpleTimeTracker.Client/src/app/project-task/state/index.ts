@@ -3,9 +3,16 @@ import { ProjectTaskState } from "./project-task.reducer";
 
 const getProjectTaskFeatureState = createFeatureSelector<ProjectTaskState>('projectTasks');
 
-export const getProjectTasks = createSelector(getProjectTaskFeatureState, state => state.projectTasks);
-
 export const getCurrentProjectTaskId = createSelector(getProjectTaskFeatureState, state => state.currentProjectTaskId);
+
+export const getProjectIdFilter = createSelector(getProjectTaskFeatureState, state => state.projectIdFilter);
+
+export const getProjectTasks = createSelector(
+    getProjectTaskFeatureState,
+    getProjectIdFilter,
+    (state, projectIdFilter) => {
+        return projectIdFilter != null ? state.projectTasks.filter(p => p.project.id == projectIdFilter) : state.projectTasks;
+    });
 
 export const getCurrentProjectTask = createSelector(
     getProjectTaskFeatureState,

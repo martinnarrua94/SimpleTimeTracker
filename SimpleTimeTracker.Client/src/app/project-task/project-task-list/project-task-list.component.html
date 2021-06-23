@@ -1,13 +1,17 @@
 <div class="mat-h1 headline">Tareas</div>
 
-<mat-form-field appearance="fill">
-  <mat-label>Proyecto</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let project of projects$ | async" [value]="project.id">
-      {{project.name}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="filter-fields">
+  <mat-form-field appearance="fill">
+    <mat-label>Proyecto</mat-label>
+    <mat-select (selectionChange)="projectSelected($event)">
+      <mat-option>Todos</mat-option>
+      <mat-option *ngFor="let project of projects$ | async" [value]="project.id">
+        {{project.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 
 <table mat-table [dataSource]="projectTasks$ | async" class="mat-elevation-z8">
 

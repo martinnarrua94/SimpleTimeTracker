@@ -28,4 +28,8 @@ export class ProjectTaskListComponent implements OnInit {
     this.projects$ = this.store.pipe(select(fromProject.getProjects));
   }
 
+  projectSelected($event) {
+    this.store.dispatch(new projectTaskActions.SetProjectIdFilter($event.value));
+  }
+
 }
