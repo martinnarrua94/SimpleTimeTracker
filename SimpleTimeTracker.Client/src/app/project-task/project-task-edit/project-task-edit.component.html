@@ -1,0 +1,44 @@
+<div *ngIf="projectTask$ | async as projectTask">
+    <form [formGroup]="projectTaskForm" (ngSubmit)="saveProjectTask(projectTask)">
+        <h1>{{pageTitle}}</h1>
+        <mat-form-field class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput formControlName="name">
+            <mat-error *ngIf="projectTaskForm.get('name').hasError('required')">
+                For favor, ingrese un nombre válido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Proyecto</mat-label>
+            <mat-select formControlName="project" [disabled]="!isNewProjectTask">
+                <mat-option *ngFor="let project of projects$ | async" [value]="project">
+                 {{project.name}}
+                </mat-option>
+              </mat-select>
+        </mat-form-field>     
+            
+        <mat-form-field class="full-width">
+            <mat-label>Notas</mat-label>
+            <textarea matInput formControlName="notes" rows="4"></textarea>
+        </mat-form-field>  
+    
+        <button mat-raised-button
+                color="warn"
+                class="save-button"
+                [routerLink]="['/project-tasks']">
+                <mat-icon>cancel</mat-icon>             
+                Cancelar
+        </button>
+
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!projectTaskForm.valid"
+                class="save-button">
+            <mat-icon>check_circle</mat-icon>
+            Guardar
+        </button>
+      
+    </form>
+</div>

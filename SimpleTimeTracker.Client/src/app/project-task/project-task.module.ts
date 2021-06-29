@@ -9,20 +9,22 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/project-task.reducer';
 import { ProjectTaskEffects } from './state/project-task.effects';
 import { AppMaterialModule } from '../app-material.module';
+import { ProjectTaskEditComponent } from './project-task-edit/project-task-edit.component';
 
 const routes: Routes = [
   {
     path: 'project-tasks',
     children: [
-      { path: '', component: ProjectTaskListComponent }
-      //{ path: 'edit', component: ProjectEditComponent }
+      { path: '', component: ProjectTaskListComponent },
+      { path: 'edit', component: ProjectTaskEditComponent }
     ]
   }   
 ];
 
 @NgModule({
   declarations: [
-    ProjectTaskListComponent,    
+    ProjectTaskListComponent,
+    ProjectTaskEditComponent,    
   ],
   imports: [
     CommonModule,
