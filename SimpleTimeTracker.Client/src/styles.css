@@ -14,3 +14,13 @@ table {
 .filter-fields{
     margin-left: 10px;
 }
+
+.full-width {
+    width: 100%;
+  }
+
+  form {
+    min-width: 150px;
+    max-width: 40%;
+    margin: 30px;
+  }
