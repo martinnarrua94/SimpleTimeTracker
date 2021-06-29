@@ -1,4 +1,4 @@
-import { IProjectTask } from "../project-task";
+import { IProjectTask } from "../interfaces/project-task";
 import { ProjectTaskActions, ProjectTaskActionTypes } from "./project-task.actions";
 
 export interface ProjectTaskState {

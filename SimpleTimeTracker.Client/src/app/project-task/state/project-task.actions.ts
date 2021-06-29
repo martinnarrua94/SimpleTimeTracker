@@ -1,5 +1,7 @@
 import { Action } from "@ngrx/store";
-import { IProjectTask } from "../project-task";
+import { IProjectTask } from "../interfaces/project-task";
+import { IProjectTaskCreate } from "../interfaces/project-task-create";
+import { IProjectTaskUpdate } from "../interfaces/project-task-update";
 
 export enum ProjectTaskActionTypes {
     Load = '[Project Task] Load',
@@ -59,7 +61,7 @@ export class InitializeCurrentProjectTask implements Action {
 export class AddProjectTask implements Action {
     readonly type = ProjectTaskActionTypes.AddProjectTask;
 
-    constructor(public payload: IProjectTask) { }
+    constructor(public payload: IProjectTaskCreate) { }
 }
 
 export class AddProjectTaskSuccess implements Action {
@@ -77,7 +79,7 @@ export class AddProjectTaskFail implements Action {
 export class UpdateProjectTask implements Action {
     readonly type = ProjectTaskActionTypes.UpdateProjectTask;
 
-    constructor(public payload: IProjectTask) { }
+    constructor(public payload: IProjectTaskUpdate) { }
 }
 
 export class UpdateProjectTaskSuccess implements Action {

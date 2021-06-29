@@ -1,4 +1,4 @@
-import { IProject } from "../project/project";
+import { IProject } from "../../project/project";
 
 export interface IProjectTask {
     id: number;
