@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class ProjectEditComponent implements OnInit {
   
   projectForm: FormGroup;
-  project$: Observable<IProject | null>
+  project$: Observable<IProject | null>;
   pageTitle: string;
   isReadOnly: boolean;
   backButtonColor: string;
@@ -31,7 +31,6 @@ export class ProjectEditComponent implements OnInit {
       name: ['', Validators.required],
       notes: ['']  
     });
-
     
     this.store.select(getIsReadOnly).subscribe(
       isReadOnly => this.isReadOnly = isReadOnly

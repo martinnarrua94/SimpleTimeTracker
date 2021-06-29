@@ -22,7 +22,7 @@ export class ProjectEffects {
         )
     );
 
-    addProjects$ = createEffect(
+    addProject$ = createEffect(
         () => this.actions$.pipe(
             ofType(projectActions.ProjectActionTypes.AddProject),
             map((action: projectActions.AddProject) => action.payload),
@@ -34,7 +34,7 @@ export class ProjectEffects {
         )
     );
 
-    updateProjects$ = createEffect(
+    updateProject$ = createEffect(
         () => this.actions$.pipe(
             ofType(projectActions.ProjectActionTypes.UpdateProject),
             map((action: projectActions.UpdateProject) => action.payload),
@@ -46,7 +46,7 @@ export class ProjectEffects {
         )
     );
 
-    deleteProjects$ = createEffect(
+    deleteProject$ = createEffect(
         () => this.actions$.pipe(
             ofType(projectActions.ProjectActionTypes.DeleteProject),
             map((action: projectActions.DeleteProject) => action.payload),

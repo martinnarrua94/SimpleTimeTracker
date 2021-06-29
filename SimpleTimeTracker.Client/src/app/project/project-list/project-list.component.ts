@@ -57,7 +57,7 @@ export class ProjectListComponent implements OnInit {
         this.store.dispatch(new projectActions.SetCurrentProject(project));
         this.store.dispatch(new projectActions.DeleteProject(project.id));
       }
-    })
+    });
   }
 
 }
