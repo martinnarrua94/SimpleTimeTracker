@@ -30,41 +30,34 @@
         <td mat-cell *matCellDef="let projectTask"> {{projectTask.project.name}} </td>
       </ng-container>
   
-    <!-- <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let projectTask">
         <button mat-raised-button color="accent"
             class="action-button"
-            [routerLink]="['/projects/edit']"
-            (click)="editProject(project)">
+            [routerLink]="['/project-tasks/edit']"
+            (click)="editProjectTask(projectTask)">
             <mat-icon>edit</mat-icon>
             Editar
         </button>
         <button mat-raised-button color="warn"
             class="action-button"
-            (click)="deleteProject(project)">
+            (click)="deleteProjectTask(projectTask)">
             <mat-icon>delete</mat-icon>
             Eliminar
         </button>
-        <button mat-raised-button color="primary"
-            class="action-button"
-            [routerLink]="['/projects/edit']"
-            (click)="viewProject(project)">
-            <mat-icon>visibility</mat-icon>
-            Ver
-        </button>
       </td>
-    </ng-container> -->
+    </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="['name','notes','project']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['name','notes','project']"></tr>
+    <tr mat-header-row *matHeaderRowDef="['name','notes','project','actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name','notes','project','actions']"></tr>
 </table>
 
-<!-- <button mat-fab 
+<button mat-fab 
         color="primary"
-        matTooltip="Agregar Proyecto"
+        matTooltip="Agregar Tarea"
         class="add-button"
-        [routerLink]="['/projects/edit']"
-        (click)="newProject()">
+        [routerLink]="['/project-tasks/edit']"
+        (click)="newProjectTask()">
     <mat-icon >add</mat-icon>
-</button> -->
+</button>

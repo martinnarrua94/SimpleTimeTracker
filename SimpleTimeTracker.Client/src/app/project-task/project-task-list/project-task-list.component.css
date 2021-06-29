@@ -1,0 +1,12 @@
+/*TODO: This should be at styles.css but it is not working*/
+
+.add-button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+}
+
+.action-button {
+    right: 5px;
+    margin: 5px;
+}
