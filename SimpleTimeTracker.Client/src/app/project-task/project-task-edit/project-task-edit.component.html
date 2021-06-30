@@ -25,7 +25,7 @@
     
         <button mat-raised-button
                 color="warn"
-                class="save-button"
+                class="action-button"
                 [routerLink]="['/project-tasks']">
                 <mat-icon>cancel</mat-icon>             
                 Cancelar
@@ -35,7 +35,7 @@
                 color="primary"
                 type="submit"
                 [disabled]="!projectTaskForm.valid"
-                class="save-button">
+                class="action-button">
             <mat-icon>check_circle</mat-icon>
             Guardar
         </button>
