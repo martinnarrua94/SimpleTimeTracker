@@ -94,7 +94,7 @@ namespace SimpleTimeTracker.Migrations
             modelBuilder.Entity("SimpleTimeTracker.ProjectTask", b =>
                 {
                     b.HasOne("SimpleTimeTracker.Project", "Project")
-                        .WithMany()
+                        .WithMany("ProjectTasks")
                         .HasForeignKey("ProjectId");
 
                     b.Navigation("Project");
@@ -107,12 +107,22 @@ namespace SimpleTimeTracker.Migrations
                         .HasForeignKey("ProjectId");
 
                     b.HasOne("SimpleTimeTracker.ProjectTask", "ProjectTask")
-                        .WithMany()
+                        .WithMany("TimeEntries")
                         .HasForeignKey("ProjectTaskId");
 
                     b.Navigation("Project");
 
                     b.Navigation("ProjectTask");
+                });
+
+            modelBuilder.Entity("SimpleTimeTracker.Project", b =>
+                {
+                    b.Navigation("ProjectTasks");
+                });
+
+            modelBuilder.Entity("SimpleTimeTracker.ProjectTask", b =>
+                {
+                    b.Navigation("TimeEntries");
                 });
 #pragma warning restore 612, 618
         }

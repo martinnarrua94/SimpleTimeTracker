@@ -30,7 +30,7 @@ namespace SimpleTimeTracker
                 opt.Property(x => x.EndDate).IsRequired(false);
                 opt.Property(x => x.Notes).IsRequired(false);
                 opt.HasOne(x => x.Project).WithMany().HasForeignKey("ProjectId");
-                opt.HasOne(x => x.ProjectTask).WithMany().HasForeignKey("ProjectTaskId").IsRequired(false);
+                opt.HasOne(x => x.ProjectTask).WithMany(y => y.TimeEntries).HasForeignKey("ProjectTaskId").IsRequired(false);
             });
 
             modelBuilder.Entity<ProjectTask>(opt =>
@@ -39,7 +39,7 @@ namespace SimpleTimeTracker
                 opt.HasKey(x => x.Id);
                 opt.Property(x => x.Name);
                 opt.Property(x => x.Notes).IsRequired(false);
-                opt.HasOne(x => x.Project).WithMany().HasForeignKey("ProjectId");
+                opt.HasOne(x => x.Project).WithMany(y => y.ProjectTasks).HasForeignKey("ProjectId");
             });
         }
     }

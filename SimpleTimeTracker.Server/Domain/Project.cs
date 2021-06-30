@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SimpleTimeTracker
 {
     public class Project : BaseEntity
@@ -17,6 +19,8 @@ namespace SimpleTimeTracker
         public string Notes { get; private set; }
 
         public bool Active { get; private set; } = true;
+
+        public ICollection<ProjectTask> ProjectTasks { get; set; }
 
         public void ChangeName(string newName)
         {

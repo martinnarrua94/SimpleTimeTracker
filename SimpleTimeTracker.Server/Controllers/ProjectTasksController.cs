@@ -15,7 +15,7 @@ namespace SimpleTimeTracker
         private IGenericRepository<Project> projectRepository;
         private IMapper mapper;
 
-        private const string IncludeProperties = "Project";
+        private const string IncludeProperties = "Project,TimeEntries";
 
         public ProjectTasksController(
             IGenericRepository<ProjectTask> projectTaskRepository,

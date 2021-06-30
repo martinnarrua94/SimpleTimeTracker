@@ -14,6 +14,8 @@ namespace SimpleTimeTracker
         private IGenericRepository<Project> projectRepository;
         private IMapper mapper;
 
+        private const string IncludeProperties = "ProjectTasks";
+
         public ProjectsController(IGenericRepository<Project> projectRepository, IMapper mapper)
         {
             this.projectRepository = projectRepository;
@@ -28,7 +30,10 @@ namespace SimpleTimeTracker
                 x => x.Active
             };
 
-            var projects = this.projectRepository.Get(filter: activeFilter).ToList();
+            var projects = this.projectRepository.Get(
+                includeProperties: IncludeProperties,
+                filter: activeFilter)
+                .ToList();
 
             return mapper.Map<IEnumerable<ProjectDTO>>(projects);
         }
@@ -36,7 +41,7 @@ namespace SimpleTimeTracker
         [HttpGet("{id}")]
         public ActionResult<ProjectDTO> GetById(long id)
         {
-            var project = projectRepository.GetByID(id);
+            var project = projectRepository.GetByID(id, includeProperties: IncludeProperties);
             
             var projectDTO = mapper.Map<ProjectDTO>(project);
             

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SimpleTimeTracker
 { 
     public class ProjectTaskDTO
@@ -9,5 +11,7 @@ namespace SimpleTimeTracker
         public string Name { get; set; }
 
         public string Notes { get; set; } 
+
+        public ICollection<TimeEntryDTO> TimeEntries { get; set; }
     }
 }

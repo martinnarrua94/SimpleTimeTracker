@@ -9,7 +9,7 @@ using SimpleTimeTracker;
 namespace SimpleTimeTracker.Migrations
 {
     [DbContext(typeof(SimpleTimeTrackerDbContext))]
-    [Migration("20210530230929_InitialMigration")]
+    [Migration("20210629230112_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,7 +96,7 @@ namespace SimpleTimeTracker.Migrations
             modelBuilder.Entity("SimpleTimeTracker.ProjectTask", b =>
                 {
                     b.HasOne("SimpleTimeTracker.Project", "Project")
-                        .WithMany()
+                        .WithMany("ProjectTasks")
                         .HasForeignKey("ProjectId");
 
                     b.Navigation("Project");
@@ -109,12 +109,22 @@ namespace SimpleTimeTracker.Migrations
                         .HasForeignKey("ProjectId");
 
                     b.HasOne("SimpleTimeTracker.ProjectTask", "ProjectTask")
-                        .WithMany()
+                        .WithMany("TimeEntries")
                         .HasForeignKey("ProjectTaskId");
 
                     b.Navigation("Project");
 
                     b.Navigation("ProjectTask");
+                });
+
+            modelBuilder.Entity("SimpleTimeTracker.Project", b =>
+                {
+                    b.Navigation("ProjectTasks");
+                });
+
+            modelBuilder.Entity("SimpleTimeTracker.ProjectTask", b =>
+                {
+                    b.Navigation("TimeEntries");
                 });
 #pragma warning restore 612, 618
         }
