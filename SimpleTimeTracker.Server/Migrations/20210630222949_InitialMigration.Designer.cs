@@ -9,7 +9,7 @@ using SimpleTimeTracker;
 namespace SimpleTimeTracker.Migrations
 {
     [DbContext(typeof(SimpleTimeTrackerDbContext))]
-    [Migration("20210629230112_InitialMigration")]
+    [Migration("20210630222949_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
