@@ -6,8 +6,10 @@ import { tap } from 'rxjs/operators';
 import { State } from 'src/app/state/app.state';
 import { IProject } from '../project';
 import * as projectActions from '../state/project.actions';
-import { getCurrentProject, getIsReadOnly } from '../state';
+import * as fromProject from '../state';
 import { Router } from '@angular/router';
+import { IProjectTask } from 'src/app/project-task/interfaces/project-task';
+import * as projectTaskActions from '../../project-task/state/project-task.actions';
 
 @Component({
   selector: 'app-project-edit',
@@ -18,6 +20,7 @@ export class ProjectEditComponent implements OnInit {
   
   projectForm: FormGroup;
   project$: Observable<IProject | null>;
+  projectTasks: IProjectTask[];
   pageTitle: string;
   isReadOnly: boolean;
   backButtonColor: string;
@@ -32,13 +35,16 @@ export class ProjectEditComponent implements OnInit {
       notes: ['']  
     });
     
-    this.store.select(getIsReadOnly).subscribe(
+    this.store.select(fromProject.getIsReadOnly).subscribe(
       isReadOnly => this.isReadOnly = isReadOnly
     );
 
-    this.project$ = this.store.select(getCurrentProject)
+    this.project$ = this.store.select(fromProject.getCurrentProject)
       .pipe(
-        tap(currentProject => this.displayProject(currentProject))
+        tap(currentProject => {
+          this.displayProject(currentProject);
+          this.projectTasks = currentProject.projectTasks;
+        })    
     );
 
     this.backButtonLabel = this.isReadOnly ? "Atras" : "Cancelar";
@@ -77,6 +83,10 @@ export class ProjectEditComponent implements OnInit {
 
       this.router.navigate(["/projects"]);
     }
+  }
+
+  editProjectTasks(projectId: number) {
+    this.store.dispatch(new projectTaskActions.SetProjectIdFilter(projectId));
   }
 
 }

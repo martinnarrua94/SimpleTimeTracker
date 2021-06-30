@@ -33,4 +33,30 @@
         </button>
       
     </form>
+
+    <h2>Tareas</h2>
+    <table mat-table [dataSource]="projectTasks" class="mat-elevation-z8 tasks-table">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let projectTask"> {{projectTask.name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="notes">
+          <th mat-header-cell *matHeaderCellDef> Notas </th>
+          <td mat-cell *matCellDef="let projectTask"> {{projectTask.notes}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="['name','notes']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name','notes']"></tr>
+    </table>
+
+    <button mat-raised-button 
+        color="primary"
+        class="save-button"
+        [routerLink]="['/project-tasks']"
+        (click)="editProjectTasks(project.id)">
+        <mat-icon>edit</mat-icon>
+        Editar
+</button>
 </div>

@@ -17,7 +17,8 @@ export const getCurrentProject = createSelector(
             return {
                 id: 0,
                 name: '',
-                notes: ''
+                notes: '',
+                projectTasks: []
             };
         }
         else {
