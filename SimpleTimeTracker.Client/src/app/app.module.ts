@@ -15,6 +15,7 @@ import { SnackbarEffects } from './state/shared/snackbar/snackbar.effects';
 import { ProjectTaskEffects } from './project-task/state/project-task.effects';
 import { ProjectTaskModule } from './project-task/project-task.module';
 import { AppMaterialModule } from './app-material.module';
+import { TimeEntryModule } from './time-entry/time-entry.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { AppMaterialModule } from './app-material.module';
     BrowserModule,
     ProjectModule,
     ProjectTaskModule,
+    TimeEntryModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
