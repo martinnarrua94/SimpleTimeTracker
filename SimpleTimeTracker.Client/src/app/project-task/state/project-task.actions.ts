@@ -5,7 +5,7 @@ import { IProjectTaskUpdate } from "../interfaces/project-task-update";
 
 export enum ProjectTaskActionTypes {
     Load = '[Project Task] Load',
-    LoadSuccess = '[Project Tasl] Load Success',
+    LoadSuccess = '[Project Task] Load Success',
     LoadFail = '[Project Task] Load Fail',
     SetCurrentProjectTask = '[Project Task] Set Current Project Task',
     SetProjectIdFilter = '[Project Task] Set Project Id Filter',

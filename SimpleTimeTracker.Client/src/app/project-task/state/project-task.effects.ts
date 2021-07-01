@@ -18,7 +18,7 @@ export class ProjectTaskEffects {
             ofType(projectTaskActions.ProjectTaskActionTypes.Load),
             mergeMap((action: projectTaskActions.Load) =>
                 this.projectTaskService.getAll().pipe(
-                    map((projects: IProjectTask[]) => (new projectTaskActions.LoadSuccess(projects))),
+                    map((projectTasks: IProjectTask[]) => (new projectTaskActions.LoadSuccess(projectTasks))),
                     catchError(error => of(new projectTaskActions.LoadFail(error)))
             ))
         )
