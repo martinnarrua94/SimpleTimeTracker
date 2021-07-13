@@ -49,7 +49,7 @@ export class ProjectListComponent implements OnInit {
   deleteProject(project: IProject): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
-      data: { message: "¿Está seguro que desea eliminar este projecto?" }
+      data: { message: "¿Está seguro que desea eliminar este proyecto?" }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -60,7 +60,7 @@ export class ProjectEditComponent implements OnInit {
         this.pageTitle = "Crear nuevo proyecto";
       }
       else {
-        this.pageTitle = this.isReadOnly ? `Informacion del projecto ${project.name}` : `Editar Proyecto: ${project.name}`;
+        this.pageTitle = this.isReadOnly ? `Informacion del proyecto ${project.name}` : `Editar Proyecto: ${project.name}`;
       }
 
       this.projectForm.patchValue({
