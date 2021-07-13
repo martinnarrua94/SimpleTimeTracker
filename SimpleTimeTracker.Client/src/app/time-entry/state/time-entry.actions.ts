@@ -1,6 +1,7 @@
 import { Action } from "@ngrx/store";
 import { ITimeEntry } from "../interfaces/time-entry";
 import { ITimeEntryCreate } from "../interfaces/time-entry-create";
+import { ITimeEntryFilter } from "../interfaces/time-entry-filter";
 import { ITimeEntryUpdate } from "../interfaces/time-entry-update";
 
 export enum TimeEntryActionTypes {
@@ -18,7 +19,10 @@ export enum TimeEntryActionTypes {
     UpdateTimeEntryFail = '[Time Entry] Update Time Entry Fail',
     DeleteTimeEntry = '[Time Entry] Delete Time Entry',
     DeleteTimeEntrySuccess = '[Time Entry] Delete Time Entry Success',
-    DeleteTimeEntryFail = '[Time Entry] Delete Time Entry Fail'
+    DeleteTimeEntryFail = '[Time Entry] Delete Time Entry Fail',
+    FilterTimeEntries = '[Time Entry] Filter Time Entries',
+    FilterTimeEntriesSuccess = '[Time Entry] Filter Time Entries Success',
+    FilterTimeEntriesFail = '[Time Entry] Filter Time Entries Fail'
 }
 
 export class Load implements Action {
@@ -103,6 +107,24 @@ export class DeleteTimeEntryFail implements Action {
     constructor(public payload: string) { }
 }
 
+export class FilterTimeEntries implements Action {
+    readonly type = TimeEntryActionTypes.FilterTimeEntries;
+
+    constructor(public payload: ITimeEntryFilter) { }
+}
+
+export class FilterTimeEntriesSuccess implements Action {
+    readonly type = TimeEntryActionTypes.FilterTimeEntriesSuccess;
+
+    constructor(public payload: ITimeEntry[]) { }
+}
+
+export class FilterTimeEntriesFail implements Action {
+    readonly type = TimeEntryActionTypes.FilterTimeEntriesFail;
+
+    constructor(public payload: string) { }
+}
+
 export type TimeEntryActions = Load
     | LoadSuccess
     | LoadFail
@@ -117,4 +139,7 @@ export type TimeEntryActions = Load
     | UpdateTimeEntryFail
     | DeleteTimeEntry
     | DeleteTimeEntrySuccess
-    | DeleteTimeEntryFail;
+    | DeleteTimeEntryFail
+    | FilterTimeEntries
+    | FilterTimeEntriesSuccess
+    | FilterTimeEntriesFail;

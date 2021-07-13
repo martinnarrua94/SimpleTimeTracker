@@ -29,6 +29,20 @@ export function reducer(state: TimeEntryState = initialState, action: TimeEntryA
                 error: action.payload
             };
         
+        case TimeEntryActionTypes.FilterTimeEntriesSuccess:
+            return {
+                ...state,
+                timeEntries: action.payload,
+                error: ''
+            };
+        
+        case TimeEntryActionTypes.FilterTimeEntriesFail:
+            return {
+                ...state,
+                timeEntries: [],
+                error: action.payload
+            };
+        
         case TimeEntryActionTypes.SetCurrentTimeEntry:
             return {
                 ...state,

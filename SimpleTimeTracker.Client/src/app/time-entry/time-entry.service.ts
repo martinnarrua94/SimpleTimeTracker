@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ITimeEntry } from './interfaces/time-entry';
 import { ITimeEntryCreate } from './interfaces/time-entry-create';
+import { ITimeEntryFilter } from './interfaces/time-entry-filter';
 import { ITimeEntryUpdate } from './interfaces/time-entry-update';
 
 @Injectable({
@@ -18,6 +19,15 @@ export class TimeEntryService {
 
   getAll(): Observable<ITimeEntry[]> {
     return this.http.get<ITimeEntry[]>(this.APIURL).pipe(
+      map((response: ITimeEntry[]) => {
+        return response;
+      })
+    )
+  }
+
+  getByFilter(filter: ITimeEntryFilter): Observable<ITimeEntry[]> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<ITimeEntry[]>(`${this.APIURL}/byFilter`, filter, {headers}).pipe(
       map((response: ITimeEntry[]) => {
         return response;
       })

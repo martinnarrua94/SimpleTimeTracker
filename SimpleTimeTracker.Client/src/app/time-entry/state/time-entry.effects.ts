@@ -8,6 +8,7 @@ import { ITimeEntryCreate } from "../interfaces/time-entry-create";
 import { ITimeEntryUpdate } from "../interfaces/time-entry-update";
 import { TimeEntryService } from "../time-entry.service";
 import * as timeEntryActions from '../state/time-entry.actions';
+import { ITimeEntryFilter } from "../interfaces/time-entry-filter";
 
 @Injectable({ providedIn: 'root' })
 export class TimeEntryEffects {
@@ -20,6 +21,18 @@ export class TimeEntryEffects {
                 this.timeEntryService.getAll().pipe(
                     map((timeEntries: ITimeEntry[]) => (new timeEntryActions.LoadSuccess(timeEntries))),
                     catchError(error => of(new timeEntryActions.LoadFail(error)))
+                ))
+        )
+    );
+
+    filterTimeEntries$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(timeEntryActions.TimeEntryActionTypes.FilterTimeEntries),
+            map((action: timeEntryActions.FilterTimeEntries) => action.payload),
+            mergeMap((filter: ITimeEntryFilter) =>
+                this.timeEntryService.getByFilter(filter).pipe(
+                    map((timeEntries: ITimeEntry[]) => (new timeEntryActions.FilterTimeEntriesSuccess(timeEntries))),
+                    catchError(error => of(new timeEntryActions.FilterTimeEntriesFail(error)))
                 ))
         )
     );
