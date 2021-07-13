@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { TimeEntryState } from "./time-entry.reducer";
 
-const getTimeEntryFeatureState = createFeatureSelector<TimeEntryState>('timentries');
+const getTimeEntryFeatureState = createFeatureSelector<TimeEntryState>('timeEntries');
 
 export const getTimeEntries = createSelector(getTimeEntryFeatureState, state => state.timeEntries);
 

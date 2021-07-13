@@ -16,6 +16,7 @@ import { ProjectTaskEffects } from './project-task/state/project-task.effects';
 import { ProjectTaskModule } from './project-task/project-task.module';
 import { AppMaterialModule } from './app-material.module';
 import { TimeEntryModule } from './time-entry/time-entry.module';
+import { TimeEntryEffects } from './time-entry/state/time-entry.effects';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { TimeEntryModule } from './time-entry/time-entry.module';
     AppMaterialModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([ProjectEffects, ProjectTaskEffects, SnackbarEffects]),
+    EffectsModule.forFeature([ProjectEffects, ProjectTaskEffects, TimeEntryEffects, SnackbarEffects]),
     StoreDevtoolsModule.instrument({
       name: 'SimpleTimeTracker DevTools',
       maxAge: 25,
