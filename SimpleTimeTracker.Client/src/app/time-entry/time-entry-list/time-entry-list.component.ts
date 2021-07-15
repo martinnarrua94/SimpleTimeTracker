@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IProjectTask } from 'src/app/project-task/interfaces/project-task';
 import { IProject } from 'src/app/project/project';
 import { ITimeEntryFilter } from '../interfaces/time-entry-filter';
+import { ConfirmationDialogComponent } from 'src/app/common/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-time-entry-list',
@@ -54,6 +55,10 @@ export class TimeEntryListComponent implements OnInit {
     this.store.dispatch(new projectTaskActions.SetProjectIdFilter($event.value));
   }
 
+  timeEntrySelected(timeEntry: ITimeEntry) {
+    this.store.dispatch(new timeEntryActions.SetCurrentTimeEntry(timeEntry));
+  }
+
   isProjectSelected() {
 
   }
@@ -69,6 +74,24 @@ export class TimeEntryListComponent implements OnInit {
     }
 
     this.store.dispatch(new timeEntryActions.FilterTimeEntries(timeEntriesFilter));
+  }
+
+  editTimeEntry(timeEntry: ITimeEntry): void {
+    this.timeEntrySelected(timeEntry);
+  }
+
+  deleteTimeEntry(timeEntry: ITimeEntry): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: { message: "¿Está seguro que desea eliminar este registro de tiempo?" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.timeEntrySelected(timeEntry);
+        this.store.dispatch(new timeEntryActions.DeleteTimeEntry(timeEntry.id));
+      }
+    })
   }
 
 }
