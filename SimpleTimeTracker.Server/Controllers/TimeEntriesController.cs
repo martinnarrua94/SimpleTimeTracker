@@ -68,12 +68,15 @@ namespace SimpleTimeTracker
 
             if (filter.RangeStartDate.HasValue)
             {
-                expressions.Add(x => x.StartDate >= filter.RangeStartDate.Value);
+                expressions.Add(x => x.StartDate >= filter.RangeStartDate.Value.Date);
             }
 
             if (filter.RangeEndDate.HasValue)
             {
-                expressions.Add(x => x.StartDate <= filter.RangeEndDate.Value);
+                // In order to include the entire day.
+                var endDate = filter.RangeEndDate.Value.Date.AddDays(1).AddSeconds(-1);
+
+                expressions.Add(x => x.StartDate <= endDate);
             }
 
             if (filter.ProjectId is not null)
