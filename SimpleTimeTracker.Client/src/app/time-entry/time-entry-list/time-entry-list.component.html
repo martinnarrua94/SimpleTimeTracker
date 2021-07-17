@@ -12,7 +12,7 @@
   
     <mat-form-field appearance="fill">
       <mat-label>Tarea</mat-label>
-      <mat-select formControlName="projectTaskId" [disabled]="">
+      <mat-select formControlName="projectTaskId">
           <mat-option *ngFor="let projectTask of projectTasks$ | async" [value]="projectTask.id">
           {{projectTask.name}}
           </mat-option>

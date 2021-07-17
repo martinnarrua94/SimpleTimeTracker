@@ -42,8 +42,11 @@ export class TimeEntryListComponent implements OnInit {
     this.projects$ = this.store.pipe(select(fromProject.getProjects));
 
     this.store.select(fromTimeEntry.getTimeEntryStartDate)
-      .subscribe((timeEntryStartDate: Date) => {
-        if (timeEntryStartDate) {
+      .subscribe((date: Date) => {
+        if (date) {
+
+          // Converts server response into a js date.
+          const timeEntryStartDate = new Date(date);
 
           timer(1000, 1000)
             .pipe(
@@ -75,7 +78,7 @@ export class TimeEntryListComponent implements OnInit {
 
     this.timeEntryForm = this.fb.group({
       projectId: [null, Validators.required],
-      projectTaskId: [0]
+      projectTaskId: [{ value: 0, disabled: true }]
     })
 
     this.store.dispatch(new timeEntryActions.Load());
@@ -83,14 +86,12 @@ export class TimeEntryListComponent implements OnInit {
 
   projectSelected($event) {
     this.store.dispatch(new projectTaskActions.SetProjectIdFilter($event.value));
+
+    this.timeEntryForm.get('projectTaskId').enable();
   }
 
   timeEntrySelected(timeEntry: ITimeEntry) {
     this.store.dispatch(new timeEntryActions.SetCurrentTimeEntry(timeEntry));
-  }
-
-  isProjectSelected() {
-
   }
 
   startTimeEntry() {
@@ -106,6 +107,9 @@ export class TimeEntryListComponent implements OnInit {
       const timeEntry = { ...newTimeEntry, ...this.timeEntryForm.value };
 
       this.store.dispatch(new timeEntryActions.AddTimeEntry(timeEntry));
+
+      this.timeEntryForm.get('projectTaskId').disable();
+      this.timeEntryForm.get('projectId').disable();
     }
   }
 
