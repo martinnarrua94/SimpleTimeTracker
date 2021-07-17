@@ -23,8 +23,6 @@ export class ProjectTaskListComponent implements OnInit {
   constructor(private store: Store<State>, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new projectTaskActions.Load());
-
     this.projectTasks$ = this.store.pipe(select(fromProjectTask.getProjectTasks));
     this.projects$ = this.store.pipe(select(fromProject.getProjects));
   }

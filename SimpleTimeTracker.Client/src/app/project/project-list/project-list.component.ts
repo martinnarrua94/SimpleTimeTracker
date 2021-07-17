@@ -21,8 +21,6 @@ export class ProjectListComponent implements OnInit {
   constructor(private store: Store<State>, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new projectActions.Load());
-
     this.projects$ = this.store.pipe(select(fromProject.getProjects));
 
     this.errorMessage$ = this.store.pipe(select(fromProject.getError))
