@@ -35,7 +35,7 @@ namespace SimpleTimeTracker
         {
             var activeFilter = new List<Expression<Func<TimeEntry, bool>>>()
             { 
-                x => x.ProjectTask.Active,
+                x => x.ProjectTask == null || x.ProjectTask.Active,
                 x => x.Project.Active 
             };
 
@@ -101,9 +101,13 @@ namespace SimpleTimeTracker
         public ActionResult<TimeEntryDTO> Post(TimeEntryCreateDTO timeEntryData)
         {
             var project = projectRepository.GetByID(timeEntryData.ProjectId);
-            var projectTask = projectTaskRepository.GetByID(timeEntryData.ProjectTaskId);
+            
+            var projectTask = timeEntryData.ProjectTaskId != 0 ? 
+                            projectTaskRepository.GetByID(timeEntryData.ProjectTaskId) : null;
 
-            var timeEntry = new TimeEntry(startDate: timeEntryData.StartDate,
+            var startDate = DateTime.Now;
+
+            var timeEntry = new TimeEntry(startDate: startDate,
                                         endDate: timeEntryData.EndDate,
                                         project: project,
                                         projectTask: projectTask,
