@@ -7,13 +7,15 @@ import * as projectTaskActions from '../../project-task/state/project-task.actio
 import * as fromTimeEntry from '../state';
 import * as fromProjectTask from '../../project-task/state';
 import * as fromProject from '../../project/state';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { ITimeEntry } from '../interfaces/time-entry';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IProjectTask } from 'src/app/project-task/interfaces/project-task';
 import { IProject } from 'src/app/project/project';
 import { ITimeEntryFilter } from '../interfaces/time-entry-filter';
 import { ConfirmationDialogComponent } from 'src/app/common/confirmation-dialog/confirmation-dialog.component';
+import { ITimeEntryCreate } from '../interfaces/time-entry-create';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-time-entry-list',
@@ -26,6 +28,8 @@ export class TimeEntryListComponent implements OnInit {
   projectTasks$: Observable<IProjectTask[]>;
   projects$: Observable<IProject[]>;
   filterForm: FormGroup;
+  timeEntryForm: FormGroup;
+  timeEntryDate: Date;
 
   constructor(private fb: FormBuilder, private store: Store<State>, public dialog: MatDialog) { }
 
@@ -36,6 +40,27 @@ export class TimeEntryListComponent implements OnInit {
 
     this.projectTasks$ = this.store.pipe(select(fromProjectTask.getProjectTasks));
     this.projects$ = this.store.pipe(select(fromProject.getProjects));
+
+    this.store.select(fromTimeEntry.getTimeEntryStartDate)
+      .subscribe((timeEntryStartDate: Date) => {
+        if (timeEntryStartDate) {
+
+          timer(1000, 1000)
+            .pipe(
+              map(() => {
+                // Timezone offset in minutes.
+                let offset = timeEntryStartDate.getTimezoneOffset();
+
+                // Date from the difference between the current date and the time entry start date.
+                let newDate = new Date(new Date().getTime() - timeEntryStartDate.getTime());
+                             
+                var datePlusOffset = new Date(newDate.getTime() + offset*60000);
+                return datePlusOffset;
+              })
+            )
+            .subscribe(t => this.timeEntryDate = t);
+        }   
+      });    
   }
 
   setInitialState() {
@@ -47,6 +72,11 @@ export class TimeEntryListComponent implements OnInit {
         end: [null]
       })
     });
+
+    this.timeEntryForm = this.fb.group({
+      projectId: [null, Validators.required],
+      projectTaskId: [0]
+    })
 
     this.store.dispatch(new timeEntryActions.Load());
   }
@@ -61,6 +91,22 @@ export class TimeEntryListComponent implements OnInit {
 
   isProjectSelected() {
 
+  }
+
+  startTimeEntry() {
+    if (this.timeEntryForm.valid) {
+      
+      let newTimeEntry: ITimeEntryCreate = {
+        projectId: null,
+        projectTaskId: null,
+        endDate: null,
+        notes: ''
+      }
+
+      const timeEntry = { ...newTimeEntry, ...this.timeEntryForm.value };
+
+      this.store.dispatch(new timeEntryActions.AddTimeEntry(timeEntry));
+    }
   }
 
   filterTimeEntries() {

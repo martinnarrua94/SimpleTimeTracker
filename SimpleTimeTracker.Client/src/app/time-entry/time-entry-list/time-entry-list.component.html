@@ -1,3 +1,34 @@
+<div>
+  Nuevo registro
+  <form [formGroup]="timeEntryForm" (ngSubmit)="startTimeEntry()" class="filter-fields">
+    <mat-form-field appearance="fill">
+      <mat-label>Proyecto</mat-label>
+      <mat-select formControlName="projectId" (selectionChange)="projectSelected($event)">
+        <mat-option *ngFor="let project of projects$ | async" [value]="project.id">
+          {{project.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Tarea</mat-label>
+      <mat-select formControlName="projectTaskId" [disabled]="">
+          <mat-option *ngFor="let projectTask of projectTasks$ | async" [value]="projectTask.id">
+          {{projectTask.name}}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <button mat-raised-button
+            type="submit"
+            class="action-button play-button">
+            <mat-icon>play_circle</mat-icon>
+    </button>
+
+    <div>{{ timeEntryDate | date: "HH 'h' mm 'm' ss 's'" }}</div>
+  </form> 
+</div>
+
 <div class="mat-h1 headline">Registros de tiempo</div>
 
 <form [formGroup]="filterForm" (ngSubmit)="filterTimeEntries()" class="filter-fields">
@@ -12,13 +43,13 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-    <mat-label>Tarea</mat-label>
-    <mat-select formControlName="projectTask" [disabled]="">
-        <mat-option>Todas</mat-option>
-        <mat-option *ngFor="let projectTask of projectTasks$ | async" [value]="projectTask.id">
-        {{projectTask.name}}
-        </mat-option>
-    </mat-select>
+      <mat-label>Tarea</mat-label>
+      <mat-select formControlName="projectTask" [disabled]="">
+          <mat-option>Todas</mat-option>
+          <mat-option *ngFor="let projectTask of projectTasks$ | async" [value]="projectTask.id">
+          {{projectTask.name}}
+          </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -59,7 +90,7 @@
   
     <ng-container matColumnDef="task">
       <th mat-header-cell *matHeaderCellDef> Tarea </th>
-      <td mat-cell *matCellDef="let timeEntry"> {{timeEntry.projectTask.name}} </td>
+      <td mat-cell *matCellDef="let timeEntry"> {{timeEntry.projectTask ? timeEntry.projectTask.name : ''}} </td>
     </ng-container>
 
     <ng-container matColumnDef="start">

@@ -14,3 +14,8 @@
 form {
     max-width: 55% !important;
 }
+
+.play-button {
+    background-color: green;
+    color: white;
+}
