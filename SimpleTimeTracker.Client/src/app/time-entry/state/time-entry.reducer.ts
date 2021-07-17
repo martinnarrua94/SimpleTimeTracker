@@ -5,12 +5,14 @@ export interface TimeEntryState {
     timeEntries: ITimeEntry[];
     currentTimeEntryId: number | null;
     error: string;
+    timeEntryStartDate: Date;
 }
 
 const initialState: TimeEntryState = {
     timeEntries: [],
     currentTimeEntryId: null,
-    error: ''
+    error: '',
+    timeEntryStartDate: null
 }
 
 export function reducer(state: TimeEntryState = initialState, action: TimeEntryActions): TimeEntryState {
@@ -58,9 +60,9 @@ export function reducer(state: TimeEntryState = initialState, action: TimeEntryA
         case TimeEntryActionTypes.AddTimeEntrySuccess:
             return {
                 ...state,
-                timeEntries: [...state.timeEntries, action.payload],
                 currentTimeEntryId: action.payload.id,
-                error: ''
+                error: '',
+                timeEntryStartDate: action.payload.startDate
             };
         
         case TimeEntryActionTypes.AddTimeEntryFail:
@@ -101,7 +103,7 @@ export function reducer(state: TimeEntryState = initialState, action: TimeEntryA
                 ...state,
                 error: action.payload
             };
-            
+        
         
         default:
             return state;

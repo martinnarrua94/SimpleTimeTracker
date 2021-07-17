@@ -7,6 +7,8 @@ export const getTimeEntries = createSelector(getTimeEntryFeatureState, state => 
 
 export const getCurrentTimeEntryId = createSelector(getTimeEntryFeatureState, state => state.currentTimeEntryId);
 
+export const getTimeEntryStartDate = createSelector(getTimeEntryFeatureState, state => state.timeEntryStartDate);
+
 export const getCurrentTimeEntry = createSelector(
     getTimeEntryFeatureState,
     getCurrentTimeEntryId,
