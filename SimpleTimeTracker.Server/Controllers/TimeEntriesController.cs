@@ -122,9 +122,11 @@ namespace SimpleTimeTracker
         [HttpPut("{id}")]
         public ActionResult<TimeEntryDTO> Update(TimeEntryUpdateDTO timeEntryData, long id)
         {
-            var timeEntry = timeEntryRepository.GetByID(id);
+            var timeEntry = timeEntryRepository.GetByID(id, includeProperties: IncludeProperties);
 
-            timeEntry.ChangeEndDate(timeEntryData.EndDate);
+            var endDate = timeEntryData.EndDate.HasValue ? timeEntryData.EndDate : DateTime.Now;
+
+            timeEntry.ChangeEndDate(endDate.Value);
             timeEntry.ChangeNotes(timeEntryData.Notes);
 
             this.timeEntryRepository.Update(timeEntry);
