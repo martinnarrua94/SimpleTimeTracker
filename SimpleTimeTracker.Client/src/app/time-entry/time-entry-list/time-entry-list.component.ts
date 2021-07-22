@@ -7,7 +7,7 @@ import * as projectTaskActions from '../../project-task/state/project-task.actio
 import * as fromTimeEntry from '../state';
 import * as fromProjectTask from '../../project-task/state';
 import * as fromProject from '../../project/state';
-import { Observable, timer } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { ITimeEntry } from '../interfaces/time-entry';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IProjectTask } from 'src/app/project-task/interfaces/project-task';
@@ -16,6 +16,7 @@ import { ITimeEntryFilter } from '../interfaces/time-entry-filter';
 import { ConfirmationDialogComponent } from 'src/app/common/confirmation-dialog/confirmation-dialog.component';
 import { ITimeEntryCreate } from '../interfaces/time-entry-create';
 import { map } from 'rxjs/operators';
+import { ITimeEntryUpdate } from '../interfaces/time-entry-update';
 
 @Component({
   selector: 'app-time-entry-list',
@@ -30,6 +31,8 @@ export class TimeEntryListComponent implements OnInit {
   filterForm: FormGroup;
   timeEntryForm: FormGroup;
   timeEntryDate: Date;
+  currentTimeEntry: ITimeEntry;
+  timerSubscription: Subscription;
 
   constructor(private fb: FormBuilder, private store: Store<State>, public dialog: MatDialog) { }
 
@@ -41,14 +44,19 @@ export class TimeEntryListComponent implements OnInit {
     this.projectTasks$ = this.store.pipe(select(fromProjectTask.getProjectTasks));
     this.projects$ = this.store.pipe(select(fromProject.getProjects));
 
+    this.store.pipe(select(fromTimeEntry.getCurrentTimeEntry))
+      .subscribe((timeEntry: ITimeEntry) => this.currentTimeEntry = timeEntry );
+
     this.store.select(fromTimeEntry.getTimeEntryStartDate)
       .subscribe((date: Date) => {
         if (date) {
+          this.timeEntryForm.get('projectTaskId').disable();
+          this.timeEntryForm.get('projectId').disable();
 
           // Converts server response into a js date.
           const timeEntryStartDate = new Date(date);
 
-          timer(1000, 1000)
+          this.timerSubscription = timer(1000, 1000)
             .pipe(
               map(() => {
                 // Timezone offset in minutes.
@@ -79,7 +87,7 @@ export class TimeEntryListComponent implements OnInit {
     this.timeEntryForm = this.fb.group({
       projectId: [null, Validators.required],
       projectTaskId: [{ value: 0, disabled: true }]
-    })
+    });
 
     this.store.dispatch(new timeEntryActions.Load());
   }
@@ -107,10 +115,32 @@ export class TimeEntryListComponent implements OnInit {
       const timeEntry = { ...newTimeEntry, ...this.timeEntryForm.value };
 
       this.store.dispatch(new timeEntryActions.AddTimeEntry(timeEntry));
-
-      this.timeEntryForm.get('projectTaskId').disable();
-      this.timeEntryForm.get('projectId').disable();
     }
+  }
+
+  completeTimeEntry() {
+      if (this.currentTimeEntry) {
+        let updatedTimeEntry: ITimeEntryUpdate = {
+          id: this.currentTimeEntry.id,
+          startDate: this.currentTimeEntry.startDate,
+          endDate: this.currentTimeEntry.endDate,
+          notes: this.currentTimeEntry.notes
+        }
+
+        this.store.dispatch(new timeEntryActions.UpdateTimeEntry(updatedTimeEntry));
+        this.timerSubscription.unsubscribe();
+        this.timeEntryDate = null;
+        this.store.dispatch(new projectTaskActions.SetProjectIdFilter(0));
+        this.timeEntryForm.get('projectId').enable();
+
+        this.timeEntryForm.reset();
+
+        // BUG: Project control is shown as invalid after the reset.
+
+        this.timeEntryForm.patchValue({
+          projectTaskId: 0
+        });
+      }
   }
 
   filterTimeEntries() {

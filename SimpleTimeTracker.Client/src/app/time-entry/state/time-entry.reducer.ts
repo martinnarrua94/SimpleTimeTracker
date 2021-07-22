@@ -60,6 +60,7 @@ export function reducer(state: TimeEntryState = initialState, action: TimeEntryA
         case TimeEntryActionTypes.AddTimeEntrySuccess:
             return {
                 ...state,
+                timeEntries: [...state.timeEntries, action.payload],
                 currentTimeEntryId: action.payload.id,
                 error: '',
                 timeEntryStartDate: action.payload.startDate
@@ -78,7 +79,8 @@ export function reducer(state: TimeEntryState = initialState, action: TimeEntryA
                 ...state,
                 timeEntries: updatedTimeEntries,
                 currentTimeEntryId: action.payload.id,
-                error: ''
+                error: '',
+                timeEntryStartDate: null
             };
         
         case TimeEntryActionTypes.UpdateTimeEntryFail:

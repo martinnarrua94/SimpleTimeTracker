@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
-import { mergeMap, map, catchError } from "rxjs/operators";
+import { mergeMap, map, catchError, switchMap } from "rxjs/operators";
 import { SnackbarOpen } from "src/app/state/shared/snackbar/snackbar.actions";
 import { ITimeEntry } from "../interfaces/time-entry";
 import { ITimeEntryCreate } from "../interfaces/time-entry-create";
@@ -43,7 +43,10 @@ export class TimeEntryEffects {
             map((action: timeEntryActions.AddTimeEntry) => action.payload),
             mergeMap((timeEntry: ITimeEntryCreate) =>
                 this.timeEntryService.createTimeEntry(timeEntry).pipe(
-                    map((createdTimeEntry: ITimeEntry) => (new timeEntryActions.AddTimeEntrySuccess(createdTimeEntry))),
+                    switchMap((createdTimeEntry: ITimeEntry) => [
+                        new timeEntryActions.AddTimeEntrySuccess(createdTimeEntry),
+                        new timeEntryActions.SetCurrentTimeEntry(createdTimeEntry)
+                    ]),
                     catchError(error => of(new timeEntryActions.AddTimeEntryFail(error)))
                 ))
         )

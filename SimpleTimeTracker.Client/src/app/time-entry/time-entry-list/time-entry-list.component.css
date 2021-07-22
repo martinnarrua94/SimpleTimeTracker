@@ -19,3 +19,8 @@ form {
     background-color: green;
     color: white;
 }
+
+.stop-button {
+    background-color: red;
+    color: white;
+}
