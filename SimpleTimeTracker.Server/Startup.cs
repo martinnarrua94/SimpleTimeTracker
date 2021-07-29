@@ -36,7 +36,7 @@ namespace SimpleTimeTracker
             services.AddTransient<IGenericRepository<ProjectTask>, ProjectTaskRepository>();
 
             services.AddDbContext<SimpleTimeTrackerDbContext>(opt => {
-                opt.UseSqlite (Configuration.GetConnectionString ("DefaultConnection"));
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 });
         }
 
