@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  server:
+    image: simpletimetracker/server
+    container_name: server
+    ports:
+      - "8080:80"
+    build:
+      context: .
+      dockerfile: SimpleTimeTracker.Server/Dockerfile
+    depends_on: [ db ]
+  db:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    container_name: db
+    hostname: db
+    ports:
+        - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=1Secure*Password1
+    volumes:
+    - sqlserver_data:/var/lib/sqlserver
+volumes:
+  sqlserver_data:
