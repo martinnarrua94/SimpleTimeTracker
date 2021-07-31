@@ -8,7 +8,7 @@ RUN dotnet restore
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal
 WORKDIR /app
 COPY --from=build-stage /app .
 
