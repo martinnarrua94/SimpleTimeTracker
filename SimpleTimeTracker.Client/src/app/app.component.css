@@ -12,3 +12,10 @@
     justify-content: center;
     width: 200px;
   }
+
+  .home-button{
+    color: white;
+    position: fixed;
+    right: 10px;
+    top: 20px;
+  }
