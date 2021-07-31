@@ -50,8 +50,8 @@ namespace SimpleTimeTracker.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     ProjectId = table.Column<long>(type: "bigint", nullable: true),
                     ProjectTaskId = table.Column<long>(type: "bigint", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)

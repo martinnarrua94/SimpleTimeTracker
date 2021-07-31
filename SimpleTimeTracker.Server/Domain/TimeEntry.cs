@@ -22,9 +22,9 @@ namespace SimpleTimeTracker
             this.Notes = notes;
         }
 
-        public DateTime StartDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
 
-        public DateTime? EndDate { get; private set; }
+        public DateTimeOffset? EndDate { get; private set; }
 
         public Project Project { get; set; }
 
@@ -32,12 +32,12 @@ namespace SimpleTimeTracker
 
         public string Notes { get; private set; }
 
-        public void ChangeStartDate(DateTime newStartDate)
+        public void ChangeStartDate(DateTimeOffset newStartDate)
         {
            if (newStartDate != DateTime.MinValue) this.StartDate = newStartDate;         
         }
 
-        public void ChangeEndDate(DateTime newEndDate)
+        public void ChangeEndDate(DateTimeOffset newEndDate)
         {
            if (newEndDate != DateTime.MinValue) this.EndDate = newEndDate;         
         }

@@ -10,7 +10,7 @@ using SimpleTimeTracker;
 namespace SimpleTimeTracker.Migrations
 {
     [DbContext(typeof(SimpleTimeTrackerDbContext))]
-    [Migration("20210731192414_InitialMigration")]
+    [Migration("20210731214439_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,8 +75,8 @@ namespace SimpleTimeTracker.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("EndDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
@@ -87,8 +87,8 @@ namespace SimpleTimeTracker.Migrations
                     b.Property<long?>("ProjectTaskId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
