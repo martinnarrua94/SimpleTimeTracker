@@ -1,11 +1,22 @@
 version: '3.4'
 
 services:
+  frontend:
+    image: simpletimetracker/frontend
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: SimpleTimeTracker.Client/Dockerfile
+    ports:
+      - '4200:80'
+    environment:
+      - NODE_ENV=production
+    depends_on: [ server ]
   server:
     image: simpletimetracker/server
     container_name: server
     ports:
-      - "8080:80"
+      - "5000:5000"
     build:
       context: .
       dockerfile: SimpleTimeTracker.Server/Dockerfile
@@ -15,7 +26,7 @@ services:
     container_name: db
     hostname: db
     ports:
-        - "1433:1433"
+      - "1433:1433"
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=1Secure*Password1
