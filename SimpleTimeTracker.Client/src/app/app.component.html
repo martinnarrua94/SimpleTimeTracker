@@ -11,9 +11,10 @@
         [fixedInViewport]="false" [fixedTopGap]="1"
         [fixedBottomGap]="1">
             <mat-nav-list>
+                <a mat-list-item routerLink='/time-entries/add'><mat-icon>schedule</mat-icon> Nuevo registro</a>
                 <a mat-list-item routerLink='/projects'><mat-icon>work</mat-icon> Proyectos</a>
                 <a mat-list-item routerLink='/project-tasks'><mat-icon>task</mat-icon> Tareas</a>
-                <a mat-list-item routerLink='/time-entries'><mat-icon>schedule</mat-icon> Registros de tiempo</a>
+                <a mat-list-item routerLink='/time-entries'><mat-icon>pending_actions</mat-icon> Registros de tiempo</a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>

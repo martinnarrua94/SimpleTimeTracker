@@ -6,21 +6,6 @@
     right: 15px;
 }
 
-.action-button {
-    right: 5px;
-    margin: 5px;
-}
-
 form {
     max-width: 55% !important;
-}
-
-.play-button {
-    background-color: green;
-    color: white;
-}
-
-.stop-button {
-    background-color: red;
-    color: white;
 }

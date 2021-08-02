@@ -9,19 +9,22 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/time-entry.reducer';
 import { TimeEntryEffects } from './state/time-entry.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { TimeEntryAddComponent } from './time-entry-add/time-entry-add.component';
 
 const routes: Routes = [
   {
     path: 'time-entries',
     children: [
-      { path: '', component: TimeEntryListComponent }
+      { path: '', component: TimeEntryListComponent },
+      { path: 'add', component: TimeEntryAddComponent }
     ]
   }   
 ];
 
 @NgModule({
   declarations: [
-    TimeEntryListComponent
+    TimeEntryListComponent,
+    TimeEntryAddComponent
   ],
   imports: [
     CommonModule,

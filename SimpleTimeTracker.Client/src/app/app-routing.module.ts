@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectListComponent } from './project/project-list/project-list.component';
+import { TimeEntryAddComponent } from './time-entry/time-entry-add/time-entry-add.component';
 
 const routes: Routes = [
-  { path: '', component: ProjectListComponent },
-  { path: '**', component: ProjectListComponent }
+  { path: '', component: TimeEntryAddComponent },
+  { path: '**', component: TimeEntryAddComponent }
 ];
 
 @NgModule({

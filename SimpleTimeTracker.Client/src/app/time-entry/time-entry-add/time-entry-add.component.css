@@ -1,0 +1,14 @@
+.action-button {
+    right: 5px;
+    margin: 5px;
+}
+
+.play-button {
+    background-color: green;
+    color: white;
+}
+
+.stop-button {
+    background-color: red;
+    color: white;
+}

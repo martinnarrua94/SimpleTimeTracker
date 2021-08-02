@@ -5,7 +5,7 @@
             <mat-label>Nombre</mat-label>
             <input type="text" matInput formControlName="name" [readonly]="isReadOnly">
             <mat-error *ngIf="projectForm.get('name').hasError('required')">
-                For favor, ingrese un nombre válido.
+                Por favor, ingrese un nombre válido.
             </mat-error>
         </mat-form-field>
             
