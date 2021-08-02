@@ -15,7 +15,6 @@ import { IProject } from 'src/app/project/project';
 import { ITimeEntryFilter } from '../interfaces/time-entry-filter';
 import { ConfirmationDialogComponent } from 'src/app/common/confirmation-dialog/confirmation-dialog.component';
 import { ITimeEntryCreate } from '../interfaces/time-entry-create';
-import { map } from 'rxjs/operators';
 import { ITimeEntryUpdate } from '../interfaces/time-entry-update';
 
 @Component({
@@ -30,9 +29,12 @@ export class TimeEntryListComponent implements OnInit {
   projects$: Observable<IProject[]>;
   filterForm: FormGroup;
   timeEntryForm: FormGroup;
-  timeEntryDate: Date;
   currentTimeEntry: ITimeEntry;
-  timerSubscription: Subscription;
+
+  // For timer.
+  startTime: Date;
+  stopTime: Date;
+  timerActive: boolean = false;
 
   constructor(private fb: FormBuilder, private store: Store<State>, public dialog: MatDialog) { }
 
@@ -53,23 +55,7 @@ export class TimeEntryListComponent implements OnInit {
           this.timeEntryForm.get('projectTaskId').disable();
           this.timeEntryForm.get('projectId').disable();
 
-          // Converts server response into a js date.
-          const timeEntryStartDate = new Date(date);
-
-          this.timerSubscription = timer(1000, 1000)
-            .pipe(
-              map(() => {
-                // Timezone offset in minutes.
-                let offset = timeEntryStartDate.getTimezoneOffset();
-
-                // Date from the difference between the current date and the time entry start date.
-                let newDate = new Date(new Date().getTime() - timeEntryStartDate.getTime());
-                             
-                var datePlusOffset = new Date(newDate.getTime() + offset*60000);
-                return datePlusOffset;
-              })
-            )
-            .subscribe(t => this.timeEntryDate = t);
+          this.startTimer();
         }   
       });    
   }
@@ -128,8 +114,7 @@ export class TimeEntryListComponent implements OnInit {
         }
 
         this.store.dispatch(new timeEntryActions.UpdateTimeEntry(updatedTimeEntry));
-        this.timerSubscription.unsubscribe();
-        this.timeEntryDate = null;
+        this.stopTimer();
         this.store.dispatch(new projectTaskActions.SetProjectIdFilter(0));
         this.timeEntryForm.get('projectId').enable();
 
@@ -172,6 +157,34 @@ export class TimeEntryListComponent implements OnInit {
         this.store.dispatch(new timeEntryActions.DeleteTimeEntry(timeEntry.id));
       }
     })
+  }
+
+  // Timer.
+  get timeEntryDuration() {
+    return this.startTime && this.stopTime
+      ? +this.stopTime - +this.startTime
+      : 0;
+  }
+
+  timer() {
+    if (this.timerActive) {
+      this.stopTime = new Date();
+      setTimeout(() => {
+        this.timer();
+      }, 1000);
+    }
+  }
+
+  startTimer() {
+    this.startTime = new Date();
+    this.stopTime = this.stopTime;
+    this.timerActive = true;
+    this.timer();
+  }
+
+  stopTimer() {
+    this.stopTime = new Date();
+    this.timerActive = false;
   }
 
 }

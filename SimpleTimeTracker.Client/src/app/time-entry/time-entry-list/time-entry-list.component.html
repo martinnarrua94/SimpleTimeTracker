@@ -20,21 +20,21 @@
     </mat-form-field>
   
     <button mat-raised-button
-            *ngIf="!timeEntryDate"
+            *ngIf="!timerActive"
             type="submit"
             class="action-button play-button">
             <mat-icon>play_circle</mat-icon>
     </button>
 
     <button mat-raised-button
-            *ngIf="timeEntryDate"
+            *ngIf="timerActive"
             type="reset"
             class="action-button stop-button"
             (click)="completeTimeEntry()">
             <mat-icon>stop_circle</mat-icon>
     </button>
 
-    <div>{{ timeEntryDate | date: "HH 'h' mm 'm' ss 's'" }}</div>
+    <div *ngIf="timerActive">{{ timeEntryDuration | date: "HH 'h' mm 'm' ss 's'" : 'UTC' }}</div>
   </form> 
 </div>
 
