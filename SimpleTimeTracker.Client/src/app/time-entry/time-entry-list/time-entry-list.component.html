@@ -72,6 +72,11 @@
         <td mat-cell *matCellDef="let timeEntry"> {{timeEntry.endDate | date: 'medium'}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell *matHeaderCellDef> Duración </th>
+      <td mat-cell *matCellDef="let timeEntry"> {{ timeEntryDuration(timeEntry) | date: "HH 'h' mm 'm' ss 's'" : 'UTC' }} </td>
+  </ng-container>
+
     <ng-container matColumnDef="notes">
       <th mat-header-cell *matHeaderCellDef> Notas </th>
       <td mat-cell *matCellDef="let timeEntry"> {{timeEntry.notes}} </td>
@@ -96,6 +101,6 @@
       </td>
     </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="['project','task','start','end','notes','actions']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['project','task','start','end','notes','actions']"></tr>
+    <tr mat-header-row *matHeaderRowDef="['project','task','start','end','duration','notes','actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['project','task','start','end','duration','notes','actions']"></tr>
 </table>

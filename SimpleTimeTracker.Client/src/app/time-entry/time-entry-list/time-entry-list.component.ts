@@ -59,6 +59,15 @@ export class TimeEntryListComponent implements OnInit {
     this.store.dispatch(new timeEntryActions.SetCurrentTimeEntry(timeEntry));
   }
 
+  timeEntryDuration(timeEntry: ITimeEntry) {
+    if (timeEntry.startDate && timeEntry.endDate) {
+      let result = +new Date(timeEntry.endDate) - +new Date(timeEntry.startDate);
+      console.log(result);
+      return result;
+    }
+    return 0;
+  }
+
   filterTimeEntries() {
     const filter = { ...this.filterForm.value };
 
