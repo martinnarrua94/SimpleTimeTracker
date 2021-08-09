@@ -10,13 +10,18 @@ import { reducer } from './state/time-entry.reducer';
 import { TimeEntryEffects } from './state/time-entry.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { TimeEntryAddComponent } from './time-entry-add/time-entry-add.component';
+import { TimeEntryAddGuard } from './time-entry-add/time-entry-add.guard';
 
 const routes: Routes = [
   {
     path: 'time-entries',
     children: [
       { path: '', component: TimeEntryListComponent },
-      { path: 'add', component: TimeEntryAddComponent }
+      {
+        path: 'add',
+        component: TimeEntryAddComponent,
+        canDeactivate: [TimeEntryAddGuard]
+      }
     ]
   }   
 ];

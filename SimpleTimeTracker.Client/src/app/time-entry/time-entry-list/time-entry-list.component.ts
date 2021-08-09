@@ -62,7 +62,6 @@ export class TimeEntryListComponent implements OnInit {
   timeEntryDuration(timeEntry: ITimeEntry) {
     if (timeEntry.startDate && timeEntry.endDate) {
       let result = +new Date(timeEntry.endDate) - +new Date(timeEntry.startDate);
-      console.log(result);
       return result;
     }
     return 0;
